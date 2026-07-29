@@ -2,3 +2,4 @@
 пользователь:привет
 ИИ: Привет!
 
+пользователь:C:\Users\Жека\AppData\Local\Programs\Python\Python314\python.exe d:/ai-sakhalin/chat_with_memory.py
