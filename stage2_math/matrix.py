@@ -37,17 +37,64 @@ class Matrix:
             result.append(total)
         return result
 
-m = Matrix([[1, 2], [3, 4]])
-v = [5, 6]
-print("Матрица:")
-print(m)
-print("Результат умножения на вектор:", m.mul_vec(v))
-    
+    def __add__(self, other):
+        if self.n_cols != other.n_cols or self.n_rows != other.n_rows:
+            raise ValueError('матрицы должны быть одинакового размера')
+        new_rows=[]
+        for i in range(self.n_rows):
+            row=[]
+            for j in range(self.n_cols):
+                row.append(self.rows[i][j]+other.rows[i][j])
+            new_rows.append(row)
+        return Matrix(new_rows)
+
+    def __sub__(self, other):
+        if self.n_rows != other.n_rows or self.n_cols != other.n_cols:
+            raise ValueError("Матрицы должны быть одинакового размера")
+        new_rows = []
+        for i in range(self.n_rows):
+            row = []
+            for j in range(self.n_cols):
+                row.append(self.rows[i][j] - other.rows[i][j])
+            new_rows.append(row)
+        return Matrix(new_rows)
+
+    def mul_mat(self,other):
+        if self.n_cols!= other.n_rows:
+            raise ValueError('Число столбцов первой матрицы должно равняться числу строк второй')
+        new_rows=[]
+        for i in range (self.n_rows):
+            row=[]
+            for j in range (other.n_cols):
+                total=0
+                for k in range(self.n_cols):
+                    total += self.rows[i][k] * other.rows[k][j]
+                row.append(total)
+            new_rows.append(row)
+        return Matrix(new_rows)
+
+
+    def transpose(self):
+        new_rows = []
+        for j in range(self.n_cols):
+            new_row = []
+            for i in range(self.n_rows):
+                new_row.append(self.rows[i][j])
+            new_rows.append(new_row)
+        return Matrix(new_rows)
+
 
 m1 = Matrix([[1, 2], [3, 4]])
 m2 = Matrix([[5, 6], [7, 8]])
 
-m3 = m1 + m2  # Теперь это работает!
-print(m3)
+print("Сложение:")
+print(m1 + m2)
 
-        
+print("Вычитание:")
+print(m1 - m2)
+
+print("Умножение:")
+print(m1.mul_mat(m2))
+
+print("Транспонирование m1:")
+print(m1.transpose())
